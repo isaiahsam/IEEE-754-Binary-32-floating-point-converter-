@@ -42,3 +42,79 @@ h1 {
 h2 {
   color: #17a2b8;
 }
+
+.base-button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.base-button:hover, .base-button.active {
+  background-color: #0056b3;
+}
+
+.input-container {
+  margin-top: 20px;
+}
+
+.input-container label {
+  margin-right: 10px;
+}
+
+.input-container input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.convert-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.convert-button:hover {
+  background-color: #218838;
+}
+
+.space-between-inputs {
+  height: 20px; 
+}
+
+.convert-button-container {
+  margin-top: 20px; 
+}
+
+.convert-button {
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.convert-button:hover {
+  background-color: #218838; 
+}
+
+
+.input-container input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px; 
+}

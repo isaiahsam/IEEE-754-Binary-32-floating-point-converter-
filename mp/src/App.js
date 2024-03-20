@@ -1,6 +1,15 @@
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [base, setBase] = useState('');
+
+  // lagay dito logic for the conversion button
+  const handleConvert = () => {
+    console.log("Conversion logic hello world");
+    // Implement nalang yung conversion logic dito di ako marunong mag node e
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +27,24 @@ function App() {
               <li>Press the "Convert" button to calculate and display the floating-point version of the provided data.</li>
             </ol>
           </div>
+
+          <div className="base-buttons">
+            <button onClick={() => setBase('2')} className="base-button">Base 2</button>
+            <button onClick={() => setBase('10')} className="base-button">Base 10</button>
+          </div>
+          
+          {base && (
+            <div className="input-container">
+              <label htmlFor="mantissa">Mantissa:</label>
+              <input type="text" id="mantissa" name="mantissa" />
+              <div className="space-between-inputs"></div>
+              <label htmlFor='exponent'>Exponent:</label>
+              <input type="text" id="exponent" name="exponent" />
+              <div className="convert-button-container">
+                <button onClick={handleConvert} className="convert-button">Convert</button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
     </div>
