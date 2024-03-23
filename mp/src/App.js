@@ -247,7 +247,7 @@ function App() {
           <div className="instructions">
             <h2>How to use:</h2>
             <ol>
-              <li>Enter the mantissa, choosing either decimal or binary format.</li>
+              <li>Enter the mantissa including the sign : + or -, (-101.1, +4.0) choosing either decimal or binary format.</li>
               <li>Select the numerical base: base 2 or base 10.</li>
               <li>Provide the exponent value.</li>
               <li>Press the "Convert" button to calculate and display the floating-point version of the provided data.</li>
