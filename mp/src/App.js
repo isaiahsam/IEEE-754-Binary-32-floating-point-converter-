@@ -4,8 +4,6 @@ import './App.css';
 function base2(mantissa_string, exponent,base){
     let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
     let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
-    let shift_count = -1; // initialize shift_count
-    let fractionalBits = -1;
 
     // ASSIGN SIGN BIT //
     let sign_bit = -1;
@@ -20,41 +18,32 @@ function base2(mantissa_string, exponent,base){
     console.log("Exponent: " + exponent + "\n");
 
     // CALL FUNCTIONS //
+    isNormalized(mantissa_to_float, exponent); // normalize to 1.f
+    
+    exponent = isNormalized(mantissa_to_float, exponent).exponent; // compute fractional bits
+    mantissa = isNormalized(mantissa_to_float, exponent).mantissa; // compute fractional bits
     let e_prime = exponent + 127; // e prime dec
-
-    //check if denormalized //
-    if(mantissa > -1 && mantissa < 1 && exponent < -125){
-        e_prime = 0;
-        fractionalBits = fractionalPart(mantissa,base);
-    } else{
-        isNormalized(mantissa_to_float, exponent); // normalize to 1.f
-        fractionalBits = fractionalPart(mantissa,base); // compute fractional bits
-    }
     let e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
-
+    let fractionalBits = fractionalPart(mantissa,base);
     // declaration for final binary bits and hex final
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
     const hexRepresentation = binaryToHex(finalBinary);
 
-    //return hexRepresentation;
     return hexRepresentation;
 }
 
 function base10(mantissa_string,exponent,base) {
     let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
     let mantissa = parseFloat(mantissa_to_float);
-    let shift_count = -1; // initialize shift_count
     let fractionalBits = -1;
+
+    
   
     const binaryConverted = decimalToBinary(mantissa);
     mantissa = binaryConverted;
     mantissa_to_float = mantissa.toString();
     //console.log("test mantissa: " + mantissa + "\n");
     console.log("Converted decimal to binary: " + mantissa + "\n");
-    // base2(mantissa_to_float, exponent, base);
-
-    // BASE 2 PART
-
     let sign_bit = -1;
     if (mantissa_string[0] === '+') {
         sign_bit = 0;
@@ -67,30 +56,23 @@ function base10(mantissa_string,exponent,base) {
     console.log("Exponent: " + exponent + "\n");
 
     // CALL FUNCTIONS //
+    isNormalized(mantissa_to_float, exponent); // normalize to 1.f
+    
+    exponent = isNormalized(mantissa_to_float, exponent).exponent; // compute fractional bits
+    mantissa = isNormalized(mantissa_to_float, exponent).mantissa; // compute fractional bits
     let e_prime = exponent + 127; // e prime dec
-
-    //check if denormalized //
-    if(mantissa > -1 && mantissa < 1 && exponent < -125){
-        e_prime = 0;
-        fractionalBits = fractionalPart(mantissa,base);
-    } else{
-        isNormalized(mantissa_to_float, exponent); // normalize to 1.f
-        fractionalBits = fractionalPart(mantissa,base); // compute fractional bits
-    }
     let e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
-
+    fractionalBits = fractionalPart(mantissa,base);
     // declaration for final binary bits and hex final
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
     const hexRepresentation = binaryToHex(finalBinary);
 
-    //return hexRepresentation;
     return hexRepresentation;
 } 
 
 function isNormalized(mantissa_to_float, exponent) {
     let mantissa = parseFloat(mantissa_to_float);
     let shift_count = -1; // initialize shift_count
-    let fractionalBits = -1;
     // Check if the mantissa starts with "1."
     if (mantissa_to_float.startsWith("1.")) {
         // Check if the rest of the mantissa contains only '0's or '1's
@@ -122,7 +104,7 @@ function isNormalized(mantissa_to_float, exponent) {
             mantissa = parseFloat(shiftedMantissa);
             exponent -= (shift_count-1);
         }
-        return {mantissa, shift_count};
+        return {mantissa, shift_count, exponent};
     }
 }
 
@@ -141,7 +123,7 @@ function decimalTo8BitBinary(decimal) {
 }
 
 function fractionalPart(mantissa,base){
-    let mantissaString = "";
+    let mantissaString = '';
     let decimalIndex = -2; 
     // if(base == 2){
       if(base === 2){
@@ -154,12 +136,11 @@ function fractionalPart(mantissa,base){
         decimalIndex = mantissaString.indexOf('.');
         console.log("Decimal Index: " + decimalIndex);
         console.log("Mantissa Strinf: " + mantissaString);
-
     }
 
     if (decimalIndex === -1) {
         // If no decimal point is found
-        mantissaString = '1.0';
+        mantissaString = '0';
     }
 
     const digitsAfterDecimal = mantissaString.substring(decimalIndex + 1);
@@ -188,8 +169,7 @@ function binaryToHex(binary) {
     // Join the hexadecimal digits to form the final hex string
     const hexString = hexDigits.join('');
   
-    return hexString;
-    
+    return hexString; 
   }
   
 
@@ -235,13 +215,6 @@ function App() {
   //   base = baseInput;
   // }
 
-// INITIALIZATION //
-  let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
-  let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
-  let shift_count = -1; // initialize shift_count
-  let fractionalBits = -1;
-
-
   const handleConvert = () => {
 
     let conversionOutput = "";
@@ -256,8 +229,7 @@ function App() {
       // conversionOutput = {hexRepresentation};
 
     } else if (base === 10) {
-      // conversionOutput = base10(mantissa_string, exponent);
-      conversionOutput = base10(mantissa_string, exponent, base);
+      conversionOutput = base10(mantissa_string, exponent,base);
     }
     setConversionResult(conversionOutput);
   };
@@ -301,7 +273,7 @@ function App() {
               <div className="space-between-inputs"></div>
               <label htmlFor='exponent'>Exponent:</label>
               <input
-                type="text"
+                type="number"
                 id="exponent"
                 name="exponent"
                 value={exponent}
