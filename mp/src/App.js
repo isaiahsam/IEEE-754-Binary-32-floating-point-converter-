@@ -55,7 +55,8 @@ function base2(mantissa_to_float){
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
     const hexRepresentation = binaryToHex(finalBinary);
 
-    return hexRepresentation;
+    //return hexRepresentation;
+    return finalBinary;
 
     // DISPLAY RESULTS //
     // console.log("Sign Bit: " + sign_bit); 
@@ -130,7 +131,7 @@ function decimalTo8BitBinary(decimal) {
 }
 
 function fractionalPart(mantissa, base){
-    let mantissaString = 'abcd';
+    let mantissaString = "";
     let decimalIndex = -2; 
     // if(base == 2){
       if(base === 2){
@@ -237,7 +238,7 @@ function App() {
 
     let conversionOutput = "";
 
-    setMantissa(mantissa)
+    setMantissa(mantissa_string);
     
     setBase(base);
 
