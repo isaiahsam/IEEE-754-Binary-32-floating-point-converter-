@@ -40,7 +40,7 @@ function base2(mantissa_string, exponent,base){
     return hexRepresentation;
 }
 
-function base10(mantissa_string,exponent) {
+function base10(mantissa_string,exponent,base) {
     let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
     let mantissa = parseFloat(mantissa_to_float);
     let shift_count = -1; // initialize shift_count
@@ -51,8 +51,40 @@ function base10(mantissa_string,exponent) {
     mantissa_to_float = mantissa.toString();
     //console.log("test mantissa: " + mantissa + "\n");
     console.log("Converted decimal to binary: " + mantissa + "\n");
-    base2(mantissa_to_float, exponent);
+    // base2(mantissa_to_float, exponent, base);
 
+    // BASE 2 PART
+
+    let sign_bit = -1;
+    if (mantissa_string[0] === '+') {
+        sign_bit = 0;
+    } else if (mantissa_string[0] === '-') {
+        sign_bit = 1;
+    }
+    
+    // DISPLAY INITIAL VALUES //
+    console.log("Initial \nMantissa: " + mantissa_string);
+    console.log("Exponent: " + exponent + "\n");
+
+    // CALL FUNCTIONS //
+    let e_prime = exponent + 127; // e prime dec
+
+    //check if denormalized //
+    if(mantissa > -1 && mantissa < 1 && exponent < -125){
+        e_prime = 0;
+        fractionalBits = fractionalPart(mantissa,base);
+    } else{
+        isNormalized(mantissa_to_float, exponent); // normalize to 1.f
+        fractionalBits = fractionalPart(mantissa,base); // compute fractional bits
+    }
+    let e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
+
+    // declaration for final binary bits and hex final
+    const finalBinary = sign_bit + e_prime_bin + fractionalBits;
+    const hexRepresentation = binaryToHex(finalBinary);
+
+    //return hexRepresentation;
+    return hexRepresentation;
 } 
 
 function isNormalized(mantissa_to_float, exponent) {
@@ -224,7 +256,8 @@ function App() {
       // conversionOutput = {hexRepresentation};
 
     } else if (base === 10) {
-      conversionOutput = base10(mantissa_string, exponent);
+      // conversionOutput = base10(mantissa_string, exponent);
+      conversionOutput = base10(mantissa_string, exponent, base);
     }
     setConversionResult(conversionOutput);
   };
