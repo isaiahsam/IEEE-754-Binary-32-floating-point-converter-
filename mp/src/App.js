@@ -3,8 +3,8 @@ import './App.css';
 
 // const fs = require('fs');
 // INPUT //
-const mantissa_string = "+5.25";
-const base = -1; // Assuming base 2
+let mantissa_string = "";
+// let base = -1; // Assuming base 2
 let exponent = 0;
 // const [exponent, setExponent] = useState('');
 
@@ -49,6 +49,7 @@ function base2(mantissa_to_float){
         isNormalized(mantissa_to_float); // normalize to 1.f
         fractionalBits = fractionalPart(mantissa); // compute fractional bits
     }
+    let e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
 
     // declaration for final binary bits and hex final
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
@@ -128,7 +129,7 @@ function decimalTo8BitBinary(decimal) {
     return binary;
 }
 
-function fractionalPart(mantissa){
+function fractionalPart(mantissa, base){
     let mantissaString = 'abcd';
     let decimalIndex = -2; 
     // if(base == 2){
@@ -224,7 +225,7 @@ function binaryToHex(binary) {
 
 function App() {
   const [base, setBase] = useState('');
-  const [mantissa, setMantissa] = useState('');
+  const [mantissa_string, setMantissa] = useState('');
   const [exponent, setExponent] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
 
@@ -235,6 +236,9 @@ function App() {
   const handleConvert = () => {
 
     let conversionOutput = "";
+
+    setMantissa(mantissa)
+    
     setBase(base);
 
     if (base === 2) {
@@ -291,7 +295,8 @@ function App() {
                 type="text"
                 id="mantissa"
                 name="mantissa"
-                value={mantissa}
+                // value={mantissa}
+                value={mantissa_string}
                 onChange={(e) => setMantissa(e.target.value)}
               />
               <div className="space-between-inputs"></div>
