@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// INPUT //
-let mantissa_string = "";
-// let base = -1; // Assuming base 2
-let exponent = 0;
-// const [exponent, setExponent] = useState('');
-
-// INITIALIZATION //
-let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
-let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
-let shift_count = -1; // initialize shift_count
-let fractionalBits = -1;
-
-function base2(mantissa_to_float){
+function base2(mantissa_string, exponent,base){
+    let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
+    let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
+    let shift_count = -1; // initialize shift_count
+    let fractionalBits = -1;
 
     // ASSIGN SIGN BIT //
     let sign_bit = -1;
@@ -33,10 +25,10 @@ function base2(mantissa_to_float){
     //check if denormalized //
     if(mantissa > -1 && mantissa < 1 && exponent < -125){
         e_prime = 0;
-        fractionalBits = fractionalPart(mantissa);
+        fractionalBits = fractionalPart(mantissa,base);
     } else{
-        isNormalized(mantissa_to_float); // normalize to 1.f
-        fractionalBits = fractionalPart(mantissa); // compute fractional bits
+        isNormalized(mantissa_to_float, exponent); // normalize to 1.f
+        fractionalBits = fractionalPart(mantissa,base); // compute fractional bits
     }
     let e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
 
@@ -45,21 +37,28 @@ function base2(mantissa_to_float){
     const hexRepresentation = binaryToHex(finalBinary);
 
     //return hexRepresentation;
-    return finalBinary;
-
+    return hexRepresentation;
 }
 
-function base10(mantissa_to_float) {
+function base10(mantissa_string,exponent) {
+    let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
+    let mantissa = parseFloat(mantissa_to_float);
+    let shift_count = -1; // initialize shift_count
+    let fractionalBits = -1;
+  
     const binaryConverted = decimalToBinary(mantissa);
     mantissa = binaryConverted;
     mantissa_to_float = mantissa.toString();
     //console.log("test mantissa: " + mantissa + "\n");
     console.log("Converted decimal to binary: " + mantissa + "\n");
-    base2(mantissa_to_float);
+    base2(mantissa_to_float, exponent);
 
 } 
 
-function isNormalized(mantissa_to_float) {
+function isNormalized(mantissa_to_float, exponent) {
+    let mantissa = parseFloat(mantissa_to_float);
+    let shift_count = -1; // initialize shift_count
+    let fractionalBits = -1;
     // Check if the mantissa starts with "1."
     if (mantissa_to_float.startsWith("1.")) {
         // Check if the rest of the mantissa contains only '0's or '1's
@@ -109,7 +108,7 @@ function decimalTo8BitBinary(decimal) {
     return binary;
 }
 
-function fractionalPart(mantissa, base){
+function fractionalPart(mantissa,base){
     let mantissaString = "";
     let decimalIndex = -2; 
     // if(base == 2){
@@ -164,14 +163,6 @@ function binaryToHex(binary) {
 
     // Function for converting decimal to binary
     function decimalToBinary(decimal_input) {
-        /**
-        // if (isNaN(decimal_input) || !Number.isInteger(decimal_input)) {
-        //   return "Invalid input.";
-        // }
-
-        const binary = (decimal_input >>> 0).toString(2); // Convert positive decimal to binary
-        return binary + '.'; // Add the sign bit at the beginning and a decimal point at the end
-        */
 
         if (isNaN(decimal_input) || typeof decimal_input !== 'number') {
             return "Invalid input.";
@@ -208,10 +199,16 @@ function App() {
   const [mantissa_string, setMantissa] = useState('');
   const [exponent, setExponent] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
-
   // setBase(baseInput) = () => {
   //   base = baseInput;
   // }
+
+// INITIALIZATION //
+  let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
+  let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
+  let shift_count = -1; // initialize shift_count
+  let fractionalBits = -1;
+
 
   const handleConvert = () => {
 
@@ -222,23 +219,12 @@ function App() {
     setBase(base);
 
     if (base === 2) {
-      conversionOutput = base2(mantissa_to_float);
+      conversionOutput = base2(mantissa_string, exponent,base);
       // console.log(conversionOutput)
       // conversionOutput = {hexRepresentation};
 
     } else if (base === 10) {
-      conversionOutput = base10(mantissa_to_float);
-      // conversionOutput = {hexRepresentation};
-
-
-      // const decimalNumber = parseFloat(mantissa); // Parse as floating point
-      
-      // if (!isNaN(decimalNumber)) {
-        
-      //   conversionOutput = `Decimal ${decimalNumber} converted. Specific conversion not implemented.`;
-      // } else {
-      //   conversionOutput = "Invalid mantissa input.";
-      // }
+      conversionOutput = base10(mantissa_string, exponent);
     }
     setConversionResult(conversionOutput);
   };
@@ -286,7 +272,7 @@ function App() {
                 id="exponent"
                 name="exponent"
                 value={exponent}
-                onChange={(e) => setExponent(e.target.value)}
+                onChange={(e) => setExponent(parseInt(e.target.value))}
               />
               <div className="convert-button-container">
                 {/* <button onClick={handleConvert} className="convert-button">Convert</button> */}
@@ -299,10 +285,6 @@ function App() {
             <div className="conversion-result">
               <h3>Conversion Result:</h3>
               <p>{conversionResult}</p>
-              <p>Base: {base}</p>
-              <p>Exponent: {exponent}</p>
-              <p>Mantissa: {mantissa_string}</p>
-              <p>{mantissa}</p>
             </div>
           )}
         </div>
