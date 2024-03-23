@@ -184,27 +184,8 @@ function binaryToHex(binary) {
   const hexString = hexDigits.join('');
 
   return hexString;
-  
-}function binaryToHex(binary) {
-    // Make sure the binary string is exactly 32 bits long
-    if (binary.length !== 32) {
-      return "Invalid binary input. It should be exactly 32 bits long.";
-    }
-  
-    // Split the binary string into groups of 4 bits
-    const groups = binary.match(/.{1,4}/g);
-  
-    // Convert each group to its hexadecimal equivalent
-    const hexDigits = groups.map(group => {
-      const decimalValue = parseInt(group, 2); // Convert binary to decimal
-      return decimalValue.toString(16).toUpperCase(); // Convert decimal to hexadecimal
-    });
-  
-    // Join the hexadecimal digits to form the final hex string
-    const hexString = hexDigits.join('');
-  
-    return hexString;
-  }
+}
+
 
   // Function for converting decimal to binary
   function decimalToBinary(decimal_input) {
