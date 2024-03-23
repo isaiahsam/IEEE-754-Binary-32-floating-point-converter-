@@ -4,7 +4,7 @@ import './App.css';
 // const fs = require('fs');
 // INPUT //
 const mantissa_string = "+5.25";
-const base = 10 // Assuming base 2
+const base = -1; // Assuming base 2
 let exponent = 0;
 
 // INITIALIZATION //
@@ -15,13 +15,13 @@ let fractionalBits = -1;
 
 // DECLARATION OF BASES 
 // if (base == 2){
-  if (base === 2){
-    base2(mantissa_to_float);
-}
-// else if (base == 10){
-else if (base === 10){
-    base10(mantissa_to_float);
-};
+//   if (base === 2){
+//     base2(mantissa_to_float);
+// }
+// // else if (base == 10){
+// else if (base === 10){
+//     base10(mantissa_to_float);
+// };
 
 function base2(mantissa_to_float){
 
@@ -48,15 +48,15 @@ function base2(mantissa_to_float){
     const hexRepresentation = binaryToHex(finalBinary);
 
     // DISPLAY RESULTS //
-    console.log("Sign Bit: " + sign_bit); 
-    console.log("1.f: " + mantissa);
-    console.log("shift count:" + shift_count);
-    console.log("Exponent after normalization: " + exponent);
-    console.log("e' in decimal: " + e_prime);
-    console.log("e' in binary 8 bit: " + e_prime_bin);
-    console.log("Fractional Bits: " + fractionalBits);
-    console.log("Final binary bits: " + finalBinary);
-    console.log("Hexadecimal representation: 0x" + hexRepresentation);
+    // console.log("Sign Bit: " + sign_bit); 
+    // console.log("1.f: " + mantissa);
+    // console.log("shift count:" + shift_count);
+    // console.log("Exponent after normalization: " + exponent);
+    // console.log("e' in decimal: " + e_prime);
+    // console.log("e' in binary 8 bit: " + e_prime_bin);
+    // console.log("Fractional Bits: " + fractionalBits);
+    // console.log("Final binary bits: " + finalBinary);
+    // console.log("Hexadecimal representation: 0x" + hexRepresentation);
 }
 
 function base10(mantissa_to_float) {
@@ -219,24 +219,35 @@ function App() {
   const [exponentValue, setExponentValue] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
 
+  // setBase(baseInput) = () => {
+  //   base = baseInput;
+  // }
+
   const handleConvert = () => {
-    let conversionOutput = "Conversion not implemented.";
-    if (base === '2') {
-      // Placeholder for base 2 conversion logic
-      conversionOutput = "Base 2 conversion not implemented yet.";
-    } else if (base === '10') {
-      // Example for base 10 conversion logic, needs to be replaced with actual logic
-      const decimalNumber = parseInt(mantissa, 10); // Assuming mantissa is a decimal number in string format
-      if (!isNaN(decimalNumber)) {
-        const binaryResult = decimalToBinary(decimalNumber);
-        // Further processing to fit your actual conversion logic
-        conversionOutput = `Decimal ${decimalNumber} converted to binary is: ${binaryResult}`;
-      } else {
-        conversionOutput = "Invalid mantissa input.";
-      }
+
+    let conversionOutput = "";
+    setBase(base);
+
+    if (base === 2) {
+      base2(mantissa_to_float);
+      conversionOutput = {hexRepresentation};
+    } else if (base === 10) {
+      base10(mantissa_to_float);
+      conversionOutput = {hexRepresentation};
+      // const decimalNumber = parseFloat(mantissa); // Parse as floating point
+      
+      // if (!isNaN(decimalNumber)) {
+        
+      //   conversionOutput = `Decimal ${decimalNumber} converted. Specific conversion not implemented.`;
+      // } else {
+      //   conversionOutput = "Invalid mantissa input.";
+      // }
     }
     setConversionResult(conversionOutput);
   };
+ 
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -256,8 +267,8 @@ function App() {
           </div>
 
           <div className="base-buttons">
-            <button onClick={() => setBase('2')} className="base-button">Base 2</button>
-            <button onClick={() => setBase('10')} className="base-button">Base 10</button>
+            <button onClick={() => setBase(2)} className="base-button">Base 2</button>
+            <button onClick={() => setBase(10)} className="base-button">Base 10</button>
           </div>
           
           {base && (
@@ -280,6 +291,7 @@ function App() {
                 onChange={(e) => setExponentValue(e.target.value)}
               />
               <div className="convert-button-container">
+                {/* <button onClick={handleConvert} className="convert-button">Convert</button> */}
                 <button onClick={handleConvert} className="convert-button">Convert</button>
               </div>
             </div>
