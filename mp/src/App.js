@@ -6,6 +6,7 @@ import './App.css';
 const mantissa_string = "+5.25";
 const base = -1; // Assuming base 2
 let exponent = 0;
+// const [exponent, setExponent] = useState('');
 
 // INITIALIZATION //
 let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' sign
@@ -218,7 +219,7 @@ function binaryToHex(binary) {
 function App() {
   const [base, setBase] = useState('');
   const [mantissa, setMantissa] = useState('');
-  const [exponentValue, setExponentValue] = useState('');
+  const [exponent, setExponent] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
 
   // setBase(baseInput) = () => {
@@ -232,7 +233,7 @@ function App() {
 
     if (base === 2) {
       conversionOutput = base2(mantissa_to_float);
-      console.log(conversionOutput)
+      // console.log(conversionOutput)
       // conversionOutput = {hexRepresentation};
 
     } else if (base === 10) {
@@ -293,8 +294,8 @@ function App() {
                 type="text"
                 id="exponent"
                 name="exponent"
-                value={exponentValue}
-                onChange={(e) => setExponentValue(e.target.value)}
+                value={exponent}
+                onChange={(e) => setExponent(e.target.value)}
               />
               <div className="convert-button-container">
                 {/* <button onClick={handleConvert} className="convert-button">Convert</button> */}
