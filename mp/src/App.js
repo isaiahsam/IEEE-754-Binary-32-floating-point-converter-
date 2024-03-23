@@ -124,7 +124,7 @@ function isNormalized(mantissa_to_float) {
             mantissa = parseFloat(sshiftedMantissa);
             exponent += (shift_count-1);
         } else if (mantissa_to_float[0] === '0'){
-            dotIndex = mantissa_to_float.indexOf('.');
+            const dotIndex = mantissa_to_float.indexOf('.');
             shift_count = mantissa_to_float.indexOf('1', dotIndex);
 
             const firstOneIndex = mantissa_to_float.indexOf('1');
