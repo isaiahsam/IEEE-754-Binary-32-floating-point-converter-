@@ -39,10 +39,16 @@ function base2(mantissa_to_float){
     console.log("Exponent: " + exponent + "\n");
 
     // CALL FUNCTIONS //
-    isNormalized(mantissa_to_float); // normalize to 1.f
-    fractionalBits = fractionalPart(mantissa); // compute fractional bits
-    const e_prime = exponent + 127; // e prime dec
-    const e_prime_bin = decimalTo8BitBinary(e_prime); // e prime binary
+    let e_prime = exponent + 127; // e prime dec
+
+    //check if denormalized //
+    if(mantissa > -1 && mantissa < 1 && exponent < -125){
+        e_prime = 0;
+        fractionalBits = fractionalPart(mantissa);
+    } else{
+        isNormalized(mantissa_to_float); // normalize to 1.f
+        fractionalBits = fractionalPart(mantissa); // compute fractional bits
+    }
 
     // declaration for final binary bits and hex final
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
