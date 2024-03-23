@@ -23,3 +23,7 @@
 Deployed Website Link:
 
   https://ieee-754-binary-32-floating-point-converter.vercel.app/?fbclid=IwAR0MDxxsvZ6O2KWoYi3BSyT9MF7quVtejr-PBSyNiqjvrbz4t7UqneHV5yo
+
+Demo Video Link:
+
+  https://drive.google.com/drive/folders/1sNUx6gFt5OTVAwG5zATDDRaVEN_vjRHM?usp=sharing
