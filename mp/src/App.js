@@ -47,6 +47,8 @@ function base2(mantissa_to_float){
     const finalBinary = sign_bit + e_prime_bin + fractionalBits;
     const hexRepresentation = binaryToHex(finalBinary);
 
+    return hexRepresentation;
+
     // DISPLAY RESULTS //
     // console.log("Sign Bit: " + sign_bit); 
     // console.log("1.f: " + mantissa);
@@ -229,11 +231,14 @@ function App() {
     setBase(base);
 
     if (base === 2) {
-      base2(mantissa_to_float);
-      conversionOutput = {hexRepresentation};
+      conversionOutput = base2(mantissa_to_float);
+      // conversionOutput = {hexRepresentation};
+
     } else if (base === 10) {
-      base10(mantissa_to_float);
-      conversionOutput = {hexRepresentation};
+      conversionOutput = base10(mantissa_to_float);
+      // conversionOutput = {hexRepresentation};
+
+
       // const decimalNumber = parseFloat(mantissa); // Parse as floating point
       
       // if (!isNaN(decimalNumber)) {
