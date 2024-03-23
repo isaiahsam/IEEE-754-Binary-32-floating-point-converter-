@@ -216,7 +216,7 @@ function binaryToHex(binary) {
     }
 
 function App() {
-  const [base, setBase] = useState('10');
+  const [base, setBase] = useState('');
   const [mantissa, setMantissa] = useState('');
   const [exponentValue, setExponentValue] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
@@ -232,6 +232,7 @@ function App() {
 
     if (base === 2) {
       conversionOutput = base2(mantissa_to_float);
+      console.log(conversionOutput)
       // conversionOutput = {hexRepresentation};
 
     } else if (base === 10) {
