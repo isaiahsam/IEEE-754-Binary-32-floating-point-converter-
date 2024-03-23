@@ -3,6 +3,13 @@ import './App.css';
 
 function App() {
   const [base, setBase] = useState('');
+  const [mantissa, setMantissa] = useState('');
+  const [exponent, setExponent] = useState('');
+  const [result, setResult] = useState({ binary: '', hex: '' });
+
+  const convertToBinary = (mantissa, base, exponent) => {
+    
+  }
 
   // lagay dito logic for the conversion button
   const handleConvert = () => {
