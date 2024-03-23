@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
 
-// const fs = require('fs');
 // INPUT //
 let mantissa_string = "";
 // let base = -1; // Assuming base 2
@@ -13,16 +12,6 @@ let mantissa_to_float = mantissa_string.substring(1); // This removes the '+' si
 let mantissa = parseFloat(mantissa_to_float); // Make float mantissa
 let shift_count = -1; // initialize shift_count
 let fractionalBits = -1;
-
-// DECLARATION OF BASES 
-// if (base == 2){
-//   if (base === 2){
-//     base2(mantissa_to_float);
-// }
-// // else if (base == 10){
-// else if (base === 10){
-//     base10(mantissa_to_float);
-// };
 
 function base2(mantissa_to_float){
 
@@ -58,16 +47,6 @@ function base2(mantissa_to_float){
     //return hexRepresentation;
     return finalBinary;
 
-    // DISPLAY RESULTS //
-    // console.log("Sign Bit: " + sign_bit); 
-    // console.log("1.f: " + mantissa);
-    // console.log("shift count:" + shift_count);
-    // console.log("Exponent after normalization: " + exponent);
-    // console.log("e' in decimal: " + e_prime);
-    // console.log("e' in binary 8 bit: " + e_prime_bin);
-    // console.log("Fractional Bits: " + fractionalBits);
-    // console.log("Final binary bits: " + finalBinary);
-    // console.log("Hexadecimal representation: 0x" + hexRepresentation);
 }
 
 function base10(mantissa_to_float) {
@@ -320,6 +299,10 @@ function App() {
             <div className="conversion-result">
               <h3>Conversion Result:</h3>
               <p>{conversionResult}</p>
+              <p>Base: {base}</p>
+              <p>Exponent: {exponent}</p>
+              <p>Mantissa: {mantissa_string}</p>
+              <p>{mantissa}</p>
             </div>
           )}
         </div>
