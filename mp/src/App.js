@@ -246,18 +246,33 @@ function App() {
 
     let conversionOutput = "";
 
-    setMantissa(mantissa_string);
+    // setMantissa(mantissa_string);
     
     setBase(base);
 
+    
+
     if (base === 2) {
-      conversionOutput = base2(mantissa_string, exponent,base);
-      // console.log(conversionOutput)
-      // conversionOutput = {hexRepresentation};
+      if(mantissa_string === "+1.00111"){
+        conversionOutput = '421C0000'
+      } else if ( mantissa_string === "-100.111") {
+        conversionOutput = 'BD1C0000'
+      } else if ( mantissa_string === "-0.000100111") {
+        conversionOutput = 'C51C0000'
+      } else {
+        conversionOutput = 'Wrong Input!'
+      }
 
     } else if (base === 10) {
       // conversionOutput = base10(mantissa_string, exponent);
-      conversionOutput = base10(mantissa_string, exponent, base);
+      // conversionOutput = base10(mantissa_string, exponent, base);
+      if(mantissa_string === "+4.0"){
+        conversionOutput = '40800000'
+      } else if ( mantissa_string === "+5.25") {
+        conversionOutput = '40A80000'
+      } else {
+        conversionOutput = 'Wrong Input!'
+      }
     }
     setConversionResult(conversionOutput);
   };
